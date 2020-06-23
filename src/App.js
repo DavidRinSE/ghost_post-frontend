@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  
+  componentDidMount(){
+    this.fetchPosts()
+  }
+  
+ async  fetchPosts(){
+   const fetchData = await fetch('http://localhost:8000/posts/')
+   const fetchJSON = await fetchData.json()
+   console.log(fetchJSON)
+ }
+
+  render() {
+    return (
+      <div>
+        <header>
+          <h1>👻 Ghost Post</h1>
+        </header>
+      </div>
+    );
+  }
 }
 
 export default App;
