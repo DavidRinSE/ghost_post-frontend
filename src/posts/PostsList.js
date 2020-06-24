@@ -14,13 +14,47 @@ const PostsList = (props) => {
         }
     })
 
+    const getPostElements = () => {
+        let postArr = []
+        let sort = []
+
+        switch(props.viewState.filter){
+            case 'boasts':
+                postArr = [...posts.result].filter(post => post.isBoast)
+                break;
+            case 'roasts':
+                postArr = [...posts.result].filter(post => !post.isBoast)
+                break;
+            default:
+                postArr = [...posts.result]
+        }
+
+        switch(props.viewState.sort) {
+            case 'votes':
+                sort = postArr.sort((a, b) => {
+                    if((a.upVotes - a.downVotes) > (b.upVotes - b.downVotes)){
+                        return -1
+                    } else if ((a.upVotes - a.downVotes) < (b.upVotes - b.downVotes)) {
+                        return 1
+                    } else {
+                        return 0
+                    }
+                })
+                break;
+            default:
+                sort = postArr
+                break;
+        }
+        
+        const postElements = sort.map(data => (
+            <Post key={Math.random()} data={data}/>
+        ))
+        return postElements
+    }
+
     return (
         <div className="posts-wrap">
-            { posts.result && 
-                posts.result.map(data => (
-                    <Post key={Math.random()} data={data}/>
-                ))
-            }
+            { posts.result && getPostElements() }
         </div>
     )
 }
