@@ -54,6 +54,9 @@ const PostsList = (props) => {
 
     return (
         <div className="posts-wrap">
+            { (posts.result && posts.result.length < 1) &&
+                <h1>No posts found!</h1>
+            }
             { posts.result && getPostElements() }
         </div>
     )
