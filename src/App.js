@@ -1,36 +1,25 @@
 import React from 'react';
-import Posts from './Posts'
+import PostsList from './posts/PostsList'
+import SubmitPost from './SubmitPost'
+import {Switch, Route, NavLink} from "react-router-dom"
 import './App.css';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      posts: []
-    }
-  }
+const App = () => {
 
-  componentDidMount(){
-    this.fetchPosts()
-  }
-  
-  async  fetchPosts(){
-    const fetchData = await fetch('http://localhost:8000/posts/')
-    const fetchJSON = await fetchData.json()
-    this.setState({posts: fetchJSON})
-    console.log(this.state.posts)
-  }
-
-  render() {
-    return (
-      <div>
-        <header>
-          <h1>👻 Ghost Post</h1>
-        </header>
-        <Posts posts={this.state.posts} />
+  return (
+    <div className="page">
+      <header>
+        <h1><span role="img" aria-label="Ghost emoji">👻</span> Ghost Post</h1>
+        <p><NavLink to="/">Home</NavLink> || <NavLink to="/submit">New Post</NavLink></p>
+      </header>
+      <div className="content">
+        <Switch>
+          <Route exact path="/" component={PostsList} />
+          <Route exact path="/submit" component={SubmitPost} />
+        </Switch>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;
